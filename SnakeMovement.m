@@ -49,15 +49,9 @@ Eterm = (Cyy.*Cx.^2 -2*Cxy.*Cx.*Cy + Cxx.*Cy.^2)./((1+Cx.^2 + Cy.^2).^(3/2));
 P = (-wline*Eline + wedge*Eedge + wterm*Eterm); %Energia potencial da imagem.
 [fx, fy] = gradient(P); %Forças na imagem, derivada espacial da energia potencial
 
-% step = 3;
-% figure;
-% [x,y]= meshgrid(1:step:size(fx,2),1:step:size(fy,1));
-% imshow(Ig),hold on; 
-% q = quiver(x,y,fx(1:step:end,1:step:end),fy(1:step:end,1:step:end));
-% set(q,'AutoScale','on', 'AutoScaleFactor',2.5)
-% title('Campo de força da imagem')
-% hold off;
-% pause
+figure;
+imshow(P,[]);
+title('Energia da imagem')
 
 
 %MATRIZ DAS FORÇAS INTERNAS DA COBRA
