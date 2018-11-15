@@ -33,11 +33,11 @@ Eedge = -(Ix.^2 + Iy.^2);
 %the curvature of lines in a slightly smoothed image C(x, y) = G?(x, y) * I(x, y)". 
 h = fspecial('gaussian', ceil(3*sigma),sigma);
 Ig = imfilter(I,h,'same'); 
-mx = [-1 1];
-my = [-1;1];
+mx = [1 0 -1];
+my = [1; 0; -1];
 mxx = [1 -2 1];
 myy = [1;-2;1];
-mxy = [1 -1;-1 1];
+mxy = 1/4*[-1 0 1; 0 0 0; 1 0 -1];
 Cx = conv2(Ig,mx,'same');
 Cy = conv2(Ig,my,'same');
 Cxx = conv2(Ig,mxx,'same');
@@ -46,7 +46,7 @@ Cxy = conv2(Ig,mxy,'same');
 Eterm = (Cyy.*Cx.^2 -2*Cxy.*Cx.*Cy + Cxx.*Cy.^2)./((1+Cx.^2 + Cy.^2).^(3/2));
 
 
-P = (-wline*Eline + wedge*Eedge + wterm*Eterm); %Energia potencial da imagem.
+P = (wline*Eline + wedge*Eedge + wterm*Eterm); %Energia potencial da imagem.
 [fx, fy] = gradient(P); %Forças na imagem, derivada espacial da energia potencial
 
 figure;
@@ -88,8 +88,8 @@ Minv = inv(U) * inv(L); % Fatoração LU para diminuir tempo computacional
 figure;
 for i=1:N;
     
-    xs = Minv *(xs + dt*interp2(fx,xs,ys));
-    ys = Minv *(ys + dt*interp2(fy,xs,ys));
+    xs = Minv *(xs + dt*interp2(fx,xs,ys,'*linear'));
+    ys = Minv *(ys + dt*interp2(fy,xs,ys,'*linear'));
     
     %PLOTA COBRA, MUDANDO DE VERDE PRA VERMELHO DE ACORDO DE QUÃO PROXIMO
     %ESTÁ DA ULTIMA ITERAÇÃO
