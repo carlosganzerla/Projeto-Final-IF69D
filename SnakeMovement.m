@@ -8,6 +8,7 @@ function [xs, ys] = SnakeMovement(image, xs, ys, sigma, alpha, beta, ds, dt, wli
 %que regem o movimento do contorno nestas dimensões , as constantes de
 %proporção wline, wedge, wterm, que determinam a atração do contorno a
 %linhas, bordas e terminações, respectivamente, e o número de iterações N
+%Devolve na saída as coordenadas xs ys do contorno após N iterações
 
 
 %TRANSFORMA EM GRAYSCALE CASO NÃO SEJA
@@ -98,7 +99,7 @@ for i=1:N;
     c = i/N;
     plot([xs; xs(1)], [ys; ys(1)], '-','Color',[c 1-c 0],'linewidth',2.0);
     hold off;
-    pause(0.001)    
+    pause(0.001)   
 end;
 
 display('Fim das iterações')
